@@ -9,8 +9,15 @@ class Mahasiswa extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['nama', 'nim'];
+
     public function wali()
     {
         return $this->hasONe('App\Models\Wali', 'id_mahasiswa');
+    }
+
+    public function dosen()
+    {
+        return $this->belongsTo('App\Models\Mahasiswa', 'id_dosen');
     }
 }
