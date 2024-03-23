@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MahasiswaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,4 +43,31 @@ Route::get('relasi-3', function () {
         echo '</li>';
 
     }
+});
+
+// Relasi Many to Many
+Route::get('relasi-4', function (){
+    $ani = App\Models\Mahasiswa::where('nama', '=', 'Ani')->first();
+    foreach ($ani->hobi as $temp) {
+        echo '<li>' . $temp->hobi . '</li>'; 
+    }
+});
+
+
+Route::get('relasi-5', function () {
+    $menulis = App\Models\Hobi::where('hobi', '=', 'Menulis')->first();
+    
+    echo '<h2>Mahasiswa yang Menulis:</h2>';
+    echo '<ul>';
+    
+    foreach ($menulis->mahasiswa as $temp) {
+        echo '<li>Nama: ' . $temp->nama . ' - NIM: <strong>' . $temp->nim . '</strong></li>';
+    }
+
+    echo '</ul>';
+});
+
+Route::get('/mahasiswa', function () {
+    $mahasiswas = App\Models\Mahasiswa::with('hobi', 'wali', 'dosen')->get();
+    return view('mahasiswa', compact('mahasiswas'));
 });

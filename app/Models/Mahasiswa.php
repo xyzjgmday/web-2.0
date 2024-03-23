@@ -20,4 +20,12 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo('App\Models\Mahasiswa', 'id_dosen');
     }
+
+   public function hobi()
+    {
+        return $this->belongsToMany('App\Models\Hobi', 'mahasiswa_hobi', 'id_mahasiswa', 'id_hobi');
+    }
+
+
+
 }
